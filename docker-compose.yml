@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: zeover/Dockerfile
+    container_name: zeover-backend
+    ports:
+      - "8938:8938"
+    restart: always
+    networks:
+      - zeover-net
+
+  frontend:
+    build:
+      context: .
+      dockerfile: zeover-ui/Dockerfile
+    container_name: zeover-ui
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: always
+    networks:
+      - zeover-net
+
+networks:
+  zeover-net:
+    driver: bridge
